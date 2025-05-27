@@ -1,0 +1,93 @@
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import Link from "next/link";
+
+export default function EditProduct() {
+  const router = useRouter();
+  const { id } = router.query;
+  const [form, setForm] = useState({
+    name: "",
+    description: "",
+    price: "",
+    image: "",
+  });
+
+  useEffect(() => {
+    if (!id) return;
+    axios
+      .get(`/api/products/${id}`)
+      .then((res) => {
+        setForm({
+          name: res.data.name,
+          description: res.data.description,
+          price: res.data.price,
+          image: res.data.image || "",
+        });
+      })
+      .catch((err) => console.error(err));
+  }, [id]);
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.put(`/api/products/${id}`, {
+        ...form,
+        price: parseFloat(form.price),
+      });
+      alert("Cập nhật thành công");
+      router.push(`/products/${id}`);
+    } catch {
+      alert("Lỗi khi cập nhật");
+    }
+  };
+
+  return (
+    <div style={{ padding: 20 }}>
+      <h1>Chỉnh sửa sản phẩm</h1>
+      <form onSubmit={handleSubmit}>
+        <input
+          name="name"
+          placeholder="Tên sản phẩm"
+          value={form.name}
+          onChange={handleChange}
+          required
+          style={{ width: "100%", marginBottom: 10, padding: 8 }}
+        />
+        <textarea
+          name="description"
+          placeholder="Mô tả sản phẩm"
+          value={form.description}
+          onChange={handleChange}
+          required
+          style={{ width: "100%", marginBottom: 10, padding: 8, height: 80 }}
+        />
+        <input
+          name="price"
+          type="number"
+          placeholder="Giá"
+          value={form.price}
+          onChange={handleChange}
+          required
+          style={{ width: "100%", marginBottom: 10, padding: 8 }}
+        />
+        <input
+          name="image"
+          placeholder="URL hình ảnh"
+          value={form.image}
+          onChange={handleChange}
+          style={{ width: "100%", marginBottom: 10, padding: 8 }}
+        />
+        <button type="submit" style={{ padding: "10px 20px" }}>
+          Lưu
+        </button>
+      </form>
+      <br />
+      <Link href={`/products/${id}`}>Quay về chi tiết</Link>
+    </div>
+  );
+}

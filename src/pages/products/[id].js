@@ -18,13 +18,13 @@ export default function ProductDetail() {
   }, [id]);
 
   const handleDelete = async () => {
-    if (!confirm("Bạn có chắc muốn xóa sản phẩm này?")) return;
+    if (!confirm("Are you sure you want to delete this product?")) return;
     try {
       await axios.delete(`/api/products/${id}`);
-      alert("Xóa thành công");
+      alert("Deleted successfully");
       router.push("/");
     } catch {
-      alert("Lỗi khi xóa sản phẩm");
+      alert("Error deleting product");
     }
   };
 
@@ -34,7 +34,7 @@ export default function ProductDetail() {
     <div style={{ padding: 20 }}>
       <h1>{product.name}</h1>
       <p>{product.description}</p>
-      <p>Giá: ${product.price}</p>
+      <p>Price: ${product.price}</p>
       {product.image && (
         <Image
           src={product.image}
@@ -45,12 +45,12 @@ export default function ProductDetail() {
       )}
       <div style={{ marginTop: 20 }}>
         <Link href={`/products/edit/${id}`} style={{ marginRight: 10 }}>
-          Chỉnh sửa
+          Edit
         </Link>
-        <button onClick={handleDelete}>Xóa</button>
+        <button onClick={handleDelete}>Delete</button>
       </div>
       <br />
-      <Link href="/">Quay về trang chủ</Link>
+      <Link href="/">Return to home page</Link>
     </div>
   );
 }

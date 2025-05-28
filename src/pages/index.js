@@ -14,12 +14,12 @@ export default function Home() {
 
   return (
     <div style={{ padding: 20 }}>
-      <h1>Danh sách sản phẩm</h1>
+      <h1>Product list</h1>
       <Link
         href="/products/create"
         style={{ display: "inline-block", marginBottom: 20 }}
       >
-        Tạo sản phẩm mới
+        Create new products
       </Link>
       <ul>
         {products.map((product) => (

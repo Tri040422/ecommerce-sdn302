@@ -24,20 +24,20 @@ export default function CreateProduct() {
         ...form,
         price: parseFloat(form.price),
       });
-      alert("Tạo sản phẩm thành công");
+      alert("Product created successfully");
       router.push("/");
     } catch {
-      alert("Lỗi tạo sản phẩm");
+      alert("Error creating product");
     }
   };
 
   return (
     <div style={{ padding: 20 }}>
-      <h1>Tạo sản phẩm mới</h1>
+      <h1>Create new product</h1>
       <form onSubmit={handleSubmit}>
         <input
           name="name"
-          placeholder="Tên sản phẩm"
+          placeholder="Product name"
           value={form.name}
           onChange={handleChange}
           required
@@ -45,7 +45,7 @@ export default function CreateProduct() {
         />
         <textarea
           name="description"
-          placeholder="Mô tả sản phẩm"
+          placeholder="Product description"
           value={form.description}
           onChange={handleChange}
           required
@@ -54,7 +54,7 @@ export default function CreateProduct() {
         <input
           name="price"
           type="number"
-          placeholder="Giá"
+          placeholder="Price"
           value={form.price}
           onChange={handleChange}
           required
@@ -62,17 +62,17 @@ export default function CreateProduct() {
         />
         <input
           name="image"
-          placeholder="URL hình ảnh"
+          placeholder="Image URL"
           value={form.image}
           onChange={handleChange}
           style={{ width: "100%", marginBottom: 10, padding: 8 }}
         />
         <button type="submit" style={{ padding: "10px 20px" }}>
-          Tạo
+          Create
         </button>
       </form>
       <br />
-      <Link href="/">Quay về trang chủ</Link>
+      <Link href="/">Return to home page</Link>
     </div>
   );
 }

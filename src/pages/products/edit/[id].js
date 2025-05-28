@@ -39,20 +39,20 @@ export default function EditProduct() {
         ...form,
         price: parseFloat(form.price),
       });
-      alert("Cập nhật thành công");
+      alert("Updated successfully");
       router.push(`/products/${id}`);
     } catch {
-      alert("Lỗi khi cập nhật");
+      alert("Error updating");
     }
   };
 
   return (
     <div style={{ padding: 20 }}>
-      <h1>Chỉnh sửa sản phẩm</h1>
+      <h1>Edit product</h1>
       <form onSubmit={handleSubmit}>
         <input
           name="name"
-          placeholder="Tên sản phẩm"
+          placeholder="Product name"
           value={form.name}
           onChange={handleChange}
           required
@@ -60,7 +60,7 @@ export default function EditProduct() {
         />
         <textarea
           name="description"
-          placeholder="Mô tả sản phẩm"
+          placeholder="Product description"
           value={form.description}
           onChange={handleChange}
           required
@@ -69,7 +69,7 @@ export default function EditProduct() {
         <input
           name="price"
           type="number"
-          placeholder="Giá"
+          placeholder="Price"
           value={form.price}
           onChange={handleChange}
           required
@@ -77,17 +77,17 @@ export default function EditProduct() {
         />
         <input
           name="image"
-          placeholder="URL hình ảnh"
+          placeholder="Image URL"
           value={form.image}
           onChange={handleChange}
           style={{ width: "100%", marginBottom: 10, padding: 8 }}
         />
         <button type="submit" style={{ padding: "10px 20px" }}>
-          Lưu
+          Save
         </button>
       </form>
       <br />
-      <Link href={`/products/${id}`}>Quay về chi tiết</Link>
+      <Link href={`/products/${id}`}>Back to details</Link>
     </div>
   );
 }

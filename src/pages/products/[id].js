@@ -2,7 +2,6 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Link from "next/link";
-import Image from "next/image";
 
 export default function ProductDetail() {
   const router = useRouter();
@@ -35,13 +34,14 @@ export default function ProductDetail() {
       <h1>{product.name}</h1>
       <p>{product.description}</p>
       <p>Price: ${product.price}</p>
-      {product.image && (
-        <Image
+      {product.image ? (
+        <img
           src={product.image}
           alt={product.name}
-          width={300}
-          height={300}
+          style={{ width: 300, height: 300, objectFit: "cover" }}
         />
+      ) : (
+        <p>No image available</p>
       )}
       <div style={{ marginTop: 20 }}>
         <Link href={`/products/edit/${id}`} style={{ marginRight: 10 }}>

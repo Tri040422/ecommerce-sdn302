@@ -35,6 +35,7 @@ export default function ProductDetail() {
       <p>{product.description}</p>
       <p>Price: ${product.price}</p>
       {product.image ? (
+        /* eslint-disable @next/next/no-img-element */
         <img
           src={product.image}
           alt={product.name}

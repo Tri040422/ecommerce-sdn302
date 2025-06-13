@@ -13,19 +13,45 @@ export default NextAuth({
       },
       async authorize(credentials) {
         await connectDB();
+
         const user = await User.findOne({ email: credentials.email });
+
         if (user && (await user.matchPassword(credentials.password))) {
-          return { email: user.email, name: user.name };
+          return {
+            id: user._id.toString(),
+            email: user.email,
+            name: user.name,
+          };
         }
+
         return null;
       },
     }),
   ],
   session: {
-    jwt: true,
+    strategy: "jwt",
   },
+  secret: process.env.NEXTAUTH_SECRET,
   pages: {
     signIn: "/auth/login",
     signOut: "/",
+  },
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+        token.email = user.email;
+        token.name = user.name;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      if (session.user) {
+        session.user.id = token.id;
+        session.user.email = token.email;
+        session.user.name = token.name;
+      }
+      return session;
+    },
   },
 });

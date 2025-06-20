@@ -2,11 +2,13 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Link from "next/link";
+import { useCart } from "../../context/CartContext";
 
 export default function ProductDetail() {
   const router = useRouter();
   const { id } = router.query;
   const [product, setProduct] = useState(null);
+  const { addToCart } = useCart();
 
   useEffect(() => {
     if (!id) return;
@@ -44,7 +46,11 @@ export default function ProductDetail() {
       ) : (
         <p>No image available</p>
       )}
+
       <div style={{ marginTop: 20 }}>
+        <button onClick={() => addToCart(product)} style={{ marginTop: 10 }}>
+          Add to Cart
+        </button>
         <Link href={`/products/edit/${id}`} style={{ marginRight: 10 }}>
           Edit
         </Link>

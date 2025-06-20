@@ -1,4 +1,4 @@
-import { useCart } from "../../components/CartContext";
+import { useCart } from "../../context/CartContext";
 import axios from "axios";
 import { useRouter } from "next/router";
 

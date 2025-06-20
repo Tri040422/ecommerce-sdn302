@@ -3,12 +3,14 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Link from "next/link";
 import { useCart } from "../../context/CartContext";
+import { useSession } from "next-auth/react";
 
 export default function ProductDetail() {
   const router = useRouter();
   const { id } = router.query;
   const [product, setProduct] = useState(null);
   const { addToCart } = useCart();
+  const { data: session } = useSession();
 
   useEffect(() => {
     if (!id) return;
@@ -51,10 +53,14 @@ export default function ProductDetail() {
         <button onClick={() => addToCart(product)} style={{ marginTop: 10 }}>
           Add to Cart
         </button>
-        <Link href={`/products/edit/${id}`} style={{ marginRight: 10 }}>
-          Edit
-        </Link>
-        <button onClick={handleDelete}>Delete</button>
+        {session && (
+          <>
+            <Link href={`/products/edit/${id}`} style={{ marginRight: 10 }}>
+              Edit
+            </Link>
+            <button onClick={handleDelete}>Delete</button>
+          </>
+        )}
       </div>
       <br />
       <Link href="/">Return to home page</Link>
